@@ -5,7 +5,7 @@
 #
 
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 from dateutil import parser
 
 CANVAS_BASE_URL = 'https://kent.instructure.com/api/v1'
@@ -104,10 +104,41 @@ for rw_assignment in rw_assignments:
 
 print(rw_hw_dict)
 
-def get_current_time():
-    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def compare_date_time_obj_iso(obj1, obj2):
+    obj1_date = obj1.split('T')[0]
+    obj2_date = obj2.split('T')[0]
 
-for hw_name, due_date in rw_hw_dict.items():
-    due_datetime_obj = datetime.fromisoformat(due_date)
-    current_datetime = get_current_time()
-    
+    result1 = f"{obj1} is before {obj2}"
+    result2 = f"{obj2} is after {obj2}"
+    result3 = f"{obj1} is same as {obj2}"
+
+    print("obj2_date", obj2_date)
+    print("obj1_date", obj1_date)
+    obj2_year = obj2_date.split('-')[0]
+    obj2_month = obj2_date.split('-')[1]
+    obj2_date = obj2_date.split('-')[2]
+    print(obj2_year) 
+    obj1_year = obj1_date.split('-')[0]
+    obj1_month = obj1_date.split('-')[1]
+    obj1_date = obj1_date.split('-')[2]
+
+    if obj1_year > obj2_year:
+        return result1 
+    elif obj1_year < obj2_year:
+        return result2 
+    elif obj1_year == obj2_year:
+        if obj1_month > obj2_date:
+            return result1
+        elif obj1_month < obj2_month:
+            return result2
+        elif obj2_month == obj1_month:
+            if obj1_date > obj2_date:
+                return result1
+            elif obj1_date < obj2_date:
+                return result2
+            elif obj1_date == obj2_date:
+                return "Both dates are the same. Need to check time now."
+
+rw_hw_due_dates = list(rw_hw_dict.values())
+print(rw_hw_due_dates)
+print(compare_date_time_obj_iso(rw_hw_due_dates[0], rw_hw_due_dates[1]))
