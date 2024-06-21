@@ -97,10 +97,17 @@ rw_assignments = get_assignments_for_user(rw_course_id)
 print(len(rw_assignments))
 
 rw_hw_duedates = []
+rw_hw_dict = {} # dict with key as HW names and value as due datetime
 for rw_assignment in rw_assignments:
-    rw_hw_duedates.append(rw_assignment['due_at'])
-    print(rw_assignment['due_at'])
-print(len(rw_hw_duedates))
+    if rw_assignment['due_at'] != None:
+        rw_hw_dict[rw_assignment['name']] = rw_assignment['due_at']
 
+print(rw_hw_dict)
 
-# current_time = 
+def get_current_time():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+for hw_name, due_date in rw_hw_dict.items():
+    due_datetime_obj = datetime.fromisoformat(due_date)
+    current_datetime = get_current_time()
+    
