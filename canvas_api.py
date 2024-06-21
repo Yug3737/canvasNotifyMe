@@ -107,38 +107,78 @@ print(rw_hw_dict)
 def compare_date_time_obj_iso(obj1, obj2):
     obj1_date = obj1.split('T')[0]
     obj2_date = obj2.split('T')[0]
+    obj1_time = obj1.split('T')[1]
+    obj2_time = obj2.split('T')[1]
+    # print(obj2_time)
+    # print(obj1_time)
 
     result1 = f"{obj1} is before {obj2}"
-    result2 = f"{obj2} is after {obj2}"
+    result2 = f"{obj1} is after {obj2}"
     result3 = f"{obj1} is same as {obj2}"
 
-    print("obj2_date", obj2_date)
-    print("obj1_date", obj1_date)
-    obj2_year = obj2_date.split('-')[0]
-    obj2_month = obj2_date.split('-')[1]
-    obj2_date = obj2_date.split('-')[2]
-    print(obj2_year) 
-    obj1_year = obj1_date.split('-')[0]
-    obj1_month = obj1_date.split('-')[1]
-    obj1_date = obj1_date.split('-')[2]
+    # print("obj2_date", obj2_date)
+    # print("obj1_date", obj1_date)
+    obj2_year = int(obj2_date.split('-')[0])
+    obj2_month = int(obj2_date.split('-')[1])
+    obj2_date = int(obj2_date.split('-')[2])
+    # print(obj2_year) 
+    obj1_year = int(obj1_date.split('-')[0])
+    obj1_month = int(obj1_date.split('-')[1])
+    obj1_date = int(obj1_date.split('-')[2])
 
+    # print(type(obj2_month))
+    # print(obj2_month, obj2_date)
     if obj1_year > obj2_year:
-        return result1 
-    elif obj1_year < obj2_year:
         return result2 
+    elif obj1_year < obj2_year:
+        return result1 
     elif obj1_year == obj2_year:
         if obj1_month > obj2_date:
-            return result1
-        elif obj1_month < obj2_month:
             return result2
+        elif obj1_month < obj2_month:
+            return result1
         elif obj2_month == obj1_month:
             if obj1_date > obj2_date:
-                return result1
-            elif obj1_date < obj2_date:
                 return result2
+            elif obj1_date < obj2_date:
+                return result1
             elif obj1_date == obj2_date:
-                return "Both dates are the same. Need to check time now."
+                
+                obj1_hour = obj1_time.split(':')[0]
+                obj2_hour = obj2_time.split(':')[0]
+                
+                obj1_minute = obj1_time.split(':')[1]
+                obj2_minute = obj2_time.split(':')[1]
+
+                obj1_second = obj1_time.split(':')[2]
+                obj2_second = obj2_time.split(':')[2]
+
+                if obj1_hour > obj2_hour:
+                    return result2
+                elif obj1_hour < obj2_hour:
+                    return result1
+                else:
+                    if obj1_minute > obj2_minute:
+                        return result2
+                    elif obj1_minute < obj1_minute:
+                        return result1
+                    else:
+                        if obj1_second > obj2_second:
+                            return result2
+                        elif obj1_second < obj2_second:
+                            return result1
+                        return result3
+                    
+
 
 rw_hw_due_dates = list(rw_hw_dict.values())
 print(rw_hw_due_dates)
+print("result of comparing 2 datetime strings ->")
+print(rw_hw_due_dates[0])
+print(type(rw_hw_due_dates[0]))
+print(rw_hw_due_dates[1])
+print(type(rw_hw_due_dates[1]))
 print(compare_date_time_obj_iso(rw_hw_due_dates[0], rw_hw_due_dates[1]))
+# print(compare_date_time_obj_iso("2023-06-21T12:30:45", "2023-06-21T12:30:45"))  # Output: "2023-06-21T12:30:45 is the same as 2023-06-21T12:30:45"
+# print(compare_date_time_obj_iso("2023-06-21T12:30:45", "2023-06-21T12:30:46"))  # Output: "2023-06-21T12:30:45 is before 2023-06-21T12:30:46"
+# print(compare_date_time_obj_iso("2023-06-21T12:30:46", "2023-06-21T12:30:45"))  # Output: "2023-06-21T12:30:46 is after 2023-06-21T12:30:45"
