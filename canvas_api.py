@@ -194,14 +194,26 @@ def get_current_time_string()-> str:
 def get_approximate_duedate_difference(duedate: str, today: str) -> int:
     duedate_day = duedate.split('T')[0].split('-')[2]
     current_day = today.split('T')[0].split('-')[2]
-    duedate_hour = duedate.split('T')[1].split(':')[0]
-    current_hour = today.split('T')[1].split(':')[0]
+    # duedate_hour = duedate.split('T')[1].split(':')[0]
+    # current_hour = today.split('T')[1].split(':')[0]
+    duedate_month = duedate.split('T')[0].split('-')[1]
+    current_month = today.split('T')[0].split('-')[1]
 
-    # print(current_hour)
-    # print(duedate_hour)
-    if int(duedate_day) >
-
-get_approximate_duedate_difference('2024-01-30T14:25:00Z' ,'2024-02-08T14:25:00Z')
+    print(int(duedate_day))
+    print(int(current_day))
+    print(int(current_month))
+    print(int(duedate_month))
+    print(type(duedate_day))
+    month_days_dict = {1: 31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
+    print(type(month_days_dict))
+    
+    if (int(duedate_month) == int(current_month)) and (int(duedate_day) > int(current_day)):
+        return int(duedate_day) - int(current_day)
+    elif int(duedate_month) > int(current_month):
+        print(int(duedate_day) + month_days_dict[int(current_month)] - int(current_day))
+        return int(duedate_day) + month_days_dict[int(current_month)] - int(current_day)
+        
+print(get_approximate_duedate_difference('2024-01-30T14:25:00Z' ,'2024-02-08T14:25:00Z'))
 
 # precondition: parameters are current time string and homeworks dictionary with keys are homework names and 
 #               values are corresponding hw names
