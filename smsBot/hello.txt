@@ -1,0 +1,3 @@
+Hello from Canvas Notify Me.
+I'm an sms service to remind college students of upcoming homeworks.
+For any questions contact Yug Patel at @yugpatel8767 on Twitter(X).
