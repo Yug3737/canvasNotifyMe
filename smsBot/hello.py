@@ -1,10 +1,18 @@
-from pushbullet import Pushbullet
+# Yug_API_KEY_pushbullet = "o.pRKGXgfyRf6v69A4Vwl0WkdQrkW8THQP"
+import smtplib
+from email.message import EmailMessage
+from emailToSMSConfig import senderEmail, getawayAddress, appKey
 
-Yug_API_KEY = "o.pRKGXgfyRf6v69A4Vwl0WkdQrkW8THQP"
-file = "hello.txt"
+msg = EmailMessage()
+msg.set_content("Lets get a bag")
 
-with open(file,mode="r") as f:
-  text = f.read()
+msg['From'] = senderEmail # 'email@address.com'
+msg['To'] = getawayAddress #
+msg['Subject'] = 'Hello from canvasNotifyMe!'
 
-pb = Pushbullet(Yug_API_KEY)
-push = pb.push_note("Please remember",text)
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login(senderEmail, appKey)
+
+server.send_message(msg)
+server.quit()
