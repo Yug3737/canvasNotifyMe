@@ -1,4 +1,3 @@
-# Yug_API_KEY_pushbullet = "o.pRKGXgfyRf6v69A4Vwl0WkdQrkW8THQP"
 import smtplib
 from email.message import EmailMessage
 from emailtoSMSConfig import senderEmail, gatewayAddress, appKey
