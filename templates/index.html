@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Notify Me</title>
+</head>
+<body>
+   <h1>Canvas Notify Me</h1>
+   <p>Canvas Notify Me is a convenient HW reminder SMS service that reminds you of your upcoming homeworks that are due in the next coming week(s)</p>
+   <form action="{{ url_for('submit') }}" method="post"></form>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="phone-no">Phone Number(US only)</label>
+        <input type="text" id="phone-no" name="phone-no">
+        <button>Notify Me!</button>
+   </form>
+</body>
+</html>
