@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canvas Notify Me</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
    <h1>Canvas Notify Me</h1>
@@ -15,6 +16,15 @@
         <label for="phone-no">Phone Number(US only)</label>
         <input type="text" id="phone-no" name="phone-no" required>
         <br>
+        <select name="carriers" id="carriers">
+            <option value="att">AT&T</option>
+            <option value="verizon">Verizon</option>
+            <option value="tmobile">T-Mobile</option>
+            <option value="sprint">Sprint</option>
+            <option value="specturm">Spectrum</option>
+            <option value="uscellular">US Cellular</option>
+            <option value="metropcs">Metro PCS</option>
+        </select>
         <input type="submit" value = "Notify Me!">
     </form>
     <div id ="success-message"></div>
