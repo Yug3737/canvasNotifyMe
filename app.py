@@ -11,31 +11,41 @@ def init_db():
                     (id integer primary key, name text, phone text)''')
         conn.commit()
 
+carriers = {
+    'AT&T': 'txt.att.net',
+    'Verizon': 'vtext.com',
+    'T-Mobile': 'tmomail.net',
+    'Sprint': 'messaging.sprintpcs.com',
+    'Spectrum': 'vtext.com',
+    'US Cellular': 'uscc.textmsg.com',
+    'Metro PCS': 'metropcs.sms.us'
+}
+
+def get_gateway_address(phone_number, carrier):
+    return f"{phone_number}@{carriers[carrier]}"
+
+# Phone Number and carrier provided by User
+phoneNumber = 2166324947
+carrier = 'Spectrum'
+gatewayAddress = get_gateway_address(phoneNumber,carrier)
 @app.route('/')
 def index():
     return render_template('index.html')
-    # return <form action="{{ url_for('submit') }}" method="post" ></form>
-    #     <label for="name">name: </label>
-    #     <input type="text" id="name" name="name" required>
-    #     <br>
-    #     <label for="phone-no">phone number(us only)</label>
-    #     <input type="text" id="phone-no" name="phone-no" required>
-    #     <br>
-    #     <input type="submit" value = "notify me!">
-    # </form>
 
 @app.route('/submit', methods=['post'])
 def submit():
     name = request.form['name']
     phone = request.form['phone-no']
+    carrier = request.form['carrier']
 
+    gatewayAddress = get_gateway_address(phone, carrier)
     with sqlite3.connect('database.db') as conn:
-        c= conn.cursor()
-        c.execute('insert into users (name, phone) values (?,?)', (name, phone))
+        c = conn.cursor()
+        c.execute('insert into users (name, phone, carrier) values (?,?,?)', (name, phone, carrier))
         conn.commit()
     
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug= True)
+    app.run(debug = True)
