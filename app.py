@@ -28,6 +28,7 @@ def get_gateway_address(phone_number, carrier):
 phoneNumber = 2166324947
 carrier = 'Spectrum'
 gatewayAddress = get_gateway_address(phoneNumber,carrier)
+
 @app.route('/')
 def index():
     return render_template('index.html')
