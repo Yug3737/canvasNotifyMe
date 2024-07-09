@@ -50,7 +50,7 @@ def submit():
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     cell_number = request.form['phone-no']
-    cell_carrier = request.form['carrier']
+    cell_carrier = request.form['carriers']
 
     gatewayAddress = get_gateway_address(cell_number, cell_carrier)
     new_student = Student(first_name= first_name, last_name= last_name,
