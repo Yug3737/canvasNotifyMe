@@ -27,7 +27,7 @@ carriers = {
     'verizon': 'vtext.com', # Verizon
     'tmobile': 'tmomail.net', # T-Mobile
     'sprint': 'messaging.sprintpcs.com', #Sprint
-    'specturm': 'vtext.com', #Spectrum
+    'spectrum': 'vtext.com', #Spectrum
     'uscellular': 'uscc.textmsg.com', #US Cellular
     'metropcs': 'metropcs.sms.us' # Metro PCS
 }
