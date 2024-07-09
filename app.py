@@ -38,7 +38,7 @@ def get_gateway_address(phone_number, carrier):
 
 # Phone Number and carrier provided by User
 phoneNumber = 2166324947
-carrier = 'Spectrum'
+carrier = 'spectrum'
 gatewayAddress = get_gateway_address(phoneNumber,carrier)
 
 @app.route('/')
