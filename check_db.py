@@ -5,7 +5,7 @@ def check_db():
     print("Inside check_db() func")
     with sqlite3.connect('database.db') as conn:
         c = conn.cursor()
-        c.execute('SELECT * FROM users')
+        c.execute('SELECT * FROM Students')
         rows = c.fetchall()
         for row in rows:
             print(row)
