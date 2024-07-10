@@ -13,4 +13,5 @@ def check_db():
 
 
 if __name__ == "__main__":
-    check_db()
+    # with app.app_context():
+        check_db()
