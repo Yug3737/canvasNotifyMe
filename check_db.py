@@ -1,14 +1,15 @@
-import sqlite3
-import pandas as pd
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from models.signupStudent import Base, Student
+from database import session
 
 def check_db():
     print("Inside check_db() func")
-    with sqlite3.connect('database.db') as conn:
-        c = conn.cursor()
-        c.execute('SELECT * FROM Students')
-        rows = c.fetchall()
-        for row in rows:
-            print(row)
+
+    # Query all students
+    students = session.query(Student).all()
+    for student in students:
+        print(f"ID: {student.id}, First Name: {student.first_name}, Last Name: {student.last_name}, Cell Number: {student.cell_number}, Cell Carrier: {student.cell_carrier}")
 
 
 if __name__ == "__main__":

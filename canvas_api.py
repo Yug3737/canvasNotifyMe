@@ -10,7 +10,13 @@ from dateutil import parser
 
 CANVAS_BASE_URL = 'https://kent.instructure.com/api/v1'
 # Yug's access token
-ACCESS_TOKEN = '15107~ryyMGXemnzMX3nQwAfVzKEuEH9AyLUXvuQTyCafhA8m8M2QQEQtUE3WMGEmLwHTX'
+
+def load_access_token(file_path="token.txt"):
+    with open(file_path, 'r') as file:
+        token = file.read().strip()
+    return token
+
+ACCESS_TOKEN = load_access_token() 
 
 def get_headers():
     return{

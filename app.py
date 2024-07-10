@@ -1,7 +1,6 @@
 from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 
-
 app = Flask(__name__)
 
 # Configure the databse URL
@@ -26,7 +25,7 @@ carriers = {
     'att': 'txt.att.net', # AT&T
     'verizon': 'vtext.com', # Verizon
     'tmobile': 'tmomail.net', # T-Mobile
-    'sprint': 'messaging.sprintpcs.com', #Sprint
+    'sprint': 'messaging.sprintpcs.com', # Sprint
     'spectrum': 'vtext.com', #Spectrum
     'uscellular': 'uscc.textmsg.com', #US Cellular
     'metropcs': 'metropcs.sms.us' # Metro PCS
@@ -54,8 +53,8 @@ def submit():
 
     gatewayAddress = get_gateway_address(cell_number, cell_carrier)
     new_student = Student(first_name= first_name, last_name= last_name,
-                          cell_number= cell_number, cell_carrier= cell_carrier  )
-    
+                          cell_number= cell_number, cell_carrier= cell_carrier)
+   
     db.session.add(new_student)
     db.session.commit()
     # with sqlite3.connect('database.db') as conn:
