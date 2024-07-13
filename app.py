@@ -46,15 +46,20 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    print("Start of submitw")
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     cell_number = request.form['phone-no']
     cell_carrier = request.form['carriers']
 
+    print("before gatewaty address submit")
     gatewayAddress = get_gateway_address(cell_number, cell_carrier)
+
+    print("before creating new Student objext")
     new_student = Student(first_name= first_name, last_name= last_name,
                           cell_number= cell_number, cell_carrier= cell_carrier)
-   
+    
+    print("Before adding Student")
     db.session.add(new_student)
     db.session.commit()
     # with sqlite3.connect('database.db') as conn:
