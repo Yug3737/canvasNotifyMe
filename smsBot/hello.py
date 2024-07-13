@@ -9,9 +9,9 @@ load_dotenv()
 senderEmail = os.getenv('SENDER_EMAIL')
 appKey = os.getenv('APP_KEY')
 
-# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-# sys.path.insert(0, parent_dir)
-# from app import gatewayAddress 
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+from app import gatewayAddress 
 
 if len(sys.argv) != 2:
     print("usage: python hello.py <gatewayaddress>")
