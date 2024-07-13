@@ -1,6 +1,7 @@
 from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 import subprocess
+from pathlib import Path
 import os
 
 app = Flask(__name__)
@@ -37,15 +38,25 @@ def get_gateway_address(phone_number, carrier):
     return f"{phone_number}@{carriers[carrier]}"
 
 
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
 @app.route('/submit', methods=['POST'])
 def submit():
-    print("Start of submitw")
+    print("Start of submit")
+
+    config_path = Path(__file__).resolve().parent / 'smsBot' / 'emailtoSMSConfig.py'
+
+    if not config_path.exists():
+        print(f"Error: emailtoSMSConfig.py not found at {config_path}")
+        return redirect(url_for('index'))
+
+    env = os.environ.copy()
+    env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
+
+
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     cell_number = request.form['phone-no']
@@ -69,16 +80,17 @@ def submit():
     
     print("before calling hello.py script")
 
-    env = os.environ.copy()
-    env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
+    try:
+        result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
+        print(result.stdout)
 
-    result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
-    print(result.stdout)
+        if result.returncode != 0:
+            print("hello.py encountered an error")
+            print(result.stderr)
+    except Exception as e:
+        print(f"Error running subprocess: {e}")
 
-    if result.returncode != 0:
-        print("hello.py encountered an error")
-        print(result.stderr)
-
+    
     print("Redirecting to index.html") 
     return redirect(url_for('index'))
 
