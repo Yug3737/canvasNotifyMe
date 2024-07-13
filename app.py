@@ -36,8 +36,8 @@ def get_gateway_address(phone_number, carrier):
 
 
 # Phone Number and carrier provided by User
-phoneNumber = 2166324947
-carrier = 'spectrum'
+phoneNumber = 3305150590   
+carrier = 'tmobile'
 gatewayAddress = get_gateway_address(phoneNumber,carrier)
 
 @app.route('/')
@@ -62,6 +62,9 @@ def submit():
     print("Before adding Student")
     db.session.add(new_student)
     db.session.commit()
+
+
+    print()
     # with sqlite3.connect('database.db') as conn:
         # c = conn.cursor()
         # c.execute('insert into users (first_name, last_name, phone, carrier) values (?,?,?,?)', 
