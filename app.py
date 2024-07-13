@@ -36,10 +36,7 @@ def get_gateway_address(phone_number, carrier):
     return f"{phone_number}@{carriers[carrier]}"
 
 
-# Phone Number and carrier provided by User
-phoneNumber = 3305150590   
-carrier = 'tmobile'
-gatewayAddress = get_gateway_address(phoneNumber,carrier)
+
 
 @app.route('/')
 def index():
@@ -64,6 +61,11 @@ def submit():
     db.session.add(new_student)
     db.session.commit()
 
+    # Phone Number and carrier provided by User
+    phoneNumber = cell_number 
+    carrier = cell_carrier 
+    gatewayAddress = get_gateway_address(phoneNumber,carrier)
+    
     print("Before calling hello.py script")
     result = subprocess.run(['python', './smsBot/hello.py', gatewayAddress], capture_output=True, text=True)
     print(result.stdout)
