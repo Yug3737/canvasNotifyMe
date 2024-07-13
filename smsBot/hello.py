@@ -5,17 +5,22 @@ import sys
 import importlib.util
 from dotenv import load_dotenv
 
+if len(sys.argv) != 2:
+    print("usage: python hello.py <gatewayAddress>")
+    sys.exit()
+
 load_dotenv()
 senderEmail = os.getenv('SENDER_EMAIL')
 appKey = os.getenv('APP_KEY')
 
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.insert(0, parent_dir)
-from app import gatewayAddress 
+if not senderEmail or not senderEmail:
+    print("Error: SENDER_EMAIL or APP_KEY env variables are not set.")
+    sys.exit(1)
 
-if len(sys.argv) != 2:
-    print("usage: python hello.py <gatewayaddress>")
-    sys.exit()
+# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# sys.path.insert(0, parent_dir)
+# from app import gatewayAddress 
+
 
 gatewayAddress = sys.argv[1]
 

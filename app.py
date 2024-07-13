@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
 
+# Ensure the environment variables are set
+if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
+    raise EnvironmentError("SENDER_EMAIL or APP_KEY environment variables are not set.")
+
+
 # Configure the databse URL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -44,8 +49,6 @@ def get_gateway_address(phone_number, carrier):
 def index():
     return render_template('index.html')
 
-print("before gatewaty address")
-gatewayAddress = get_gateway_address(cell_number, cell_carrier)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -67,7 +70,6 @@ def submit():
     last_name = request.form['last-name']
     cell_number = request.form['phone-no']
     cell_carrier = request.form['carriers']
-
 
 
     print("before creating new Student objext")
