@@ -47,7 +47,7 @@ def index():
 def submit():
     print("Start of submit")
 
-    config_path = Path(__file__).resolve().parent / 'smsBot' / 'emailtoSMSConfig.py'
+    config_path = Path(__file__).resolve() / 'smsBot' / 'emailtoSMSConfig.py'
 
     if not config_path.exists():
         print(f"Error: emailtoSMSConfig.py not found at {config_path}")
