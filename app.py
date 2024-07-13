@@ -72,7 +72,7 @@ def submit():
     env = os.environ.copy()
     env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
 
-    result = subprocess.run(['python', './smsbot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
+    result = subprocess.run(['python', 'smsbot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
     print(result.stdout)
 
     if result.returncode != 0:
