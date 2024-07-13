@@ -14,7 +14,7 @@ if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
 
 
 # Configure the databse URL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
