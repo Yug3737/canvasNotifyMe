@@ -1,5 +1,6 @@
 from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
+import subprocess
 
 app = Flask(__name__)
 
@@ -63,14 +64,11 @@ def submit():
     db.session.add(new_student)
     db.session.commit()
 
+    print("Before calling hello.py script")
+    result = subprocess.run(['python', './smsBot/hello.py', gatewayAddress], capture_output=True, text=True)
+    print(result.stdout)
 
-    print()
-    # with sqlite3.connect('database.db') as conn:
-        # c = conn.cursor()
-        # c.execute('insert into users (first_name, last_name, phone, carrier) values (?,?,?,?)', 
-                #  (first_name, last_name, phone, carrier))
-        # conn.commit()
-    
+    print("Redirecting to index.html") 
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
