@@ -1,9 +1,11 @@
+import os
+import subprocess
 from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
-import subprocess
 from pathlib import Path
-import os
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 
 # Configure the databse URL
@@ -47,13 +49,13 @@ def index():
 def submit():
     print("Start of submit")
 
-    # Constructing the path to emailtoSMSConfig.py dynamically
-    root_path = Path(__file__).resolve().parent  # Assuming app.py is in the root directory
-    config_path = root_path / 'smsBot' / 'emailtoSMSConfig.py'
+    # # Constructing the path to emailtoSMSConfig.py dynamically
+    # root_path = Path(__file__).resolve().parent  # Assuming app.py is in the root directory
+    # config_path = root_path / 'smsBot' / 'emailtoSMSConfig.py'
 
-    if not config_path.exists():
-        print(f"Error: emailtoSMSConfig.py not found at {config_path}")
-        return redirect(url_for('index'))
+    # if not config_path.exists():
+    #     print(f"Error: emailtoSMSConfig.py not found at {config_path}")
+    #     return redirect(url_for('index'))
 
     env = os.environ.copy()
     env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])

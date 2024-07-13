@@ -1,9 +1,13 @@
 import smtplib
 from email.message import EmailMessage
-from emailtoSMSConfig import senderEmail, appKey
 import os
 import sys
 import importlib.util
+from dotenv import load_dotenv
+
+load_dotenv()
+senderEmail = os.getenv('SENDER_EMAIL')
+appKey = os.getenv('APP_KEY')
 
 # parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # sys.path.insert(0, parent_dir)
