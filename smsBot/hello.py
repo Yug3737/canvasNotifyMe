@@ -21,7 +21,6 @@ if not senderEmail or not senderEmail:
 # sys.path.insert(0, parent_dir)
 # from app import gatewayAddress 
 
-
 gatewayAddress = sys.argv[1]
 
 msg = EmailMessage()
