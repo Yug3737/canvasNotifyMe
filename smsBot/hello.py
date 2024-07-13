@@ -10,7 +10,7 @@ import importlib.util
 # from app import gatewayAddress 
 
 if len(sys.argv) != 2:
-    print("Usage: python send_email.py <gatewayAddress>")
+    print("usage: python hello.py <gatewayaddress>")
     sys.exit()
 
 gatewayAddress = sys.argv[1]
