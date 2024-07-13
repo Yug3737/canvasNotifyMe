@@ -70,6 +70,10 @@ def submit():
     result = subprocess.run(['python', './smsBot/hello.py', gatewayAddress], capture_output=True, text=True)
     print(result.stdout)
 
+    if result.returncode != 0:
+        print("hello.py encountered an error")
+        print(result.stderr)
+
     print("Redirecting to index.html") 
     return redirect(url_for('index'))
 
