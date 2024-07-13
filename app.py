@@ -44,6 +44,8 @@ def get_gateway_address(phone_number, carrier):
 def index():
     return render_template('index.html')
 
+print("before gatewaty address")
+gatewayAddress = get_gateway_address(cell_number, cell_carrier)
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -66,8 +68,7 @@ def submit():
     cell_number = request.form['phone-no']
     cell_carrier = request.form['carriers']
 
-    print("before gatewaty address submit")
-    gatewayAddress = get_gateway_address(cell_number, cell_carrier)
+
 
     print("before creating new Student objext")
     new_student = Student(first_name= first_name, last_name= last_name,
