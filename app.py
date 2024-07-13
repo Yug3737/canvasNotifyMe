@@ -1,6 +1,7 @@
 from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 import subprocess
+import os
 
 app = Flask(__name__)
 
@@ -66,8 +67,12 @@ def submit():
     carrier = cell_carrier 
     gatewayAddress = get_gateway_address(phoneNumber,carrier)
     
-    print("Before calling hello.py script")
-    result = subprocess.run(['python', './smsBot/hello.py', gatewayAddress], capture_output=True, text=True)
+    print("before calling hello.py script")
+
+    env = os.environ.copy()
+    env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
+
+    result = subprocess.run(['python', './smsbot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
     print(result.stdout)
 
     if result.returncode != 0:
