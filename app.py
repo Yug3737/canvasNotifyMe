@@ -4,8 +4,14 @@ from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 from pathlib import Path
 from dotenv import load_dotenv
+from sqlalchemy.orm import DeclarativeBase
 
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy(model_class=Base)
 load_dotenv()
+db = SQLAlchemy(model_class=Base)
 app = Flask(__name__)
 
 # Ensure the environment variables are set
@@ -16,7 +22,7 @@ if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+db.init_app(app)
 
 # Student Model Definition
 class Student(db.Model):
@@ -74,10 +80,17 @@ def submit():
     print("before creating new Student objext")
     new_student = Student(first_name= first_name, last_name= last_name,
                           cell_number= cell_number, cell_carrier= cell_carrier)
-    
-    print("Before adding Student")
-    db.session.add(new_student)
-    db.session.commit()
+
+    try:
+
+        print("Before adding Student")
+        db.session.add(new_student)
+        db.session.commit()
+        print("Student added successfully")
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding Student to database: {e}")
+        return redirect(url_for('index'))
 
     # Phone Number and carrier provided by User
     phoneNumber = cell_number 
