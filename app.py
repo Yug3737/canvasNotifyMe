@@ -19,7 +19,7 @@ if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
     raise EnvironmentError("SENDER_EMAIL or APP_KEY environment variables are not set.")
 
 # Configure the databse URL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
