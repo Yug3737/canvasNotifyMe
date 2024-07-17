@@ -11,16 +11,11 @@ if len(sys.argv) != 2:
 
 load_dotenv()
 senderEmail = os.getenv('SENDER_EMAIL')
-appKey = os.getenv('APP_KEY')
+appKey = os.getenv('YUGPATEL8767_APP_KEY')
 
-if not senderEmail or not senderEmail:
+if not senderEmail or not appKey:
     print("Error: SENDER_EMAIL or APP_KEY env variables are not set.")
     sys.exit(1)
-
-# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-# sys.path.insert(0, parent_dir)
-# from app import gatewayAddress 
-
 
 gatewayAddress = sys.argv[1]
 

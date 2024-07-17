@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from models.signupStudent import Base, Student
@@ -9,7 +10,7 @@ from sqlalchemy.orm import DeclarativeBase
 from app import app
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///application.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SUPABASE_DB_URL')  
 class base(DeclarativeBase):
      pass
 

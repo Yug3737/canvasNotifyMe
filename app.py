@@ -4,37 +4,26 @@ from flask import Flask,request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy 
 from pathlib import Path
 from dotenv import load_dotenv
-from sqlalchemy.orm import DeclarativeBase
-
-class Base(DeclarativeBase):
-    pass
-
-db = SQLAlchemy(model_class=Base)
 load_dotenv()
-db = SQLAlchemy(model_class=Base)
+from sqlalchemy.orm import DeclarativeBase
+from supabase import  create_client, Client
+
+SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_DB_PUBLIC_API_KEY")
+SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")
+
+supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_KEY)
+
+
 app = Flask(__name__)
 
+data = supabase.table("Student").select("*").execute()
+print("data", data)
+
+
 # Ensure the environment variables are set
-if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
-    raise EnvironmentError("SENDER_EMAIL or APP_KEY environment variables are not set.")
-
-# Configure the databse URL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
-
-# Student Model Definition
-class Student(db.Model):
-    id = db.Column(db.Integer, primary_key= True)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50))
-    cell_number = db.Column(db.String(15), nullable=False)
-    cell_carrier = db.Column(db.String(50), nullable=False)
-
-#Initialize Database
-with app.app_context():
-    db.create_all()
+if not os.getenv('SENDER_EMAIL') or not os.getenv('YUGPATEL8767_APP_KEY'):
+    raise EnvironmentError("SENDER_EMAIL or YUGPATEL8767_APP_KEY environment variables are not set.")
 
 carriers = {
     'att': 'txt.att.net', # AT&T
@@ -59,14 +48,6 @@ def index():
 def submit():
     print("Start of submit")
 
-    # # Constructing the path to emailtoSMSConfig.py dynamically
-    # root_path = Path(__file__).resolve().parent  # Assuming app.py is in the root directory
-    # config_path = root_path / 'smsBot' / 'emailtoSMSConfig.py'
-
-    # if not config_path.exists():
-    #     print(f"Error: emailtoSMSConfig.py not found at {config_path}")
-    #     return redirect(url_for('index'))
-
     env = os.environ.copy()
     env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
 
@@ -77,18 +58,16 @@ def submit():
     cell_carrier = request.form['carriers']
 
 
-    print("before creating new Student objext")
-    new_student = Student(first_name= first_name, last_name= last_name,
-                          cell_number= cell_number, cell_carrier= cell_carrier)
-
     try:
 
         print("Before adding Student")
-        db.session.add(new_student)
-        db.session.commit()
-        print("Student added successfully")
+        data = supabase.table("Student").insert({
+            "first_name": first_name,
+            "last_name": last_name, 
+            "cell_number": cell_number,
+            "cell_carrier": cell_carrier}).execute()
+
     except Exception as e:
-        db.session.rollback()
         print(f"Error adding Student to database: {e}")
         return redirect(url_for('index'))
 

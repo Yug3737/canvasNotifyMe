@@ -1,10 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models.signupStudent import Base, Student
+import os
 
-DATABASE_URL = 'sqlite:///database.db'
-
-engine = create_engine(DATABASE_URL)
+SUPABASE_DB_URL = os.getenv('SUPABASE_DB_URL')
+engine = create_engine(os.getenv('SUPABSE_DB_URL'))
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
