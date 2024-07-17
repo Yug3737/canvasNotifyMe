@@ -14,7 +14,7 @@ function isValidForm(){
         return false;
     } else if(phoneNumber.length !== 10){
         alert("Phone number must be 10 digit length");
-        return true
+        return false;
     }
 
     let firstName = document.getElementById("first-name").value();
