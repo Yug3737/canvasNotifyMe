@@ -10,7 +10,7 @@ const { lstatSync } = require("fs");
 function isValidForm(){
     let phoneNumber = document.getElementById("phone-no").value;
     if (!phoneNumber.match(/^\d{10}$/)){
-        alert("Please enter a valid 10-digit US phone number.")
+        alert("Please enter a valid 10-digit US phone number.");
         return false;
     } else if(phoneNumber.length !== 10){
         alert("Phone number must be 10 digit length");
