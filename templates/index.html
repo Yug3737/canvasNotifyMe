@@ -9,7 +9,7 @@
 <body>
    <h1>Canvas Notify Me</h1>
    <p>Canvas Notify Me is a convenient HW reminder SMS service that reminds you of your upcoming homeworks that are due in the next coming week(s)</p>
-   <form action="{{ url_for('submit') }}" method="POST">
+   <form action="{{ url_for('submit') }}" method="POST" onsubmit="return validateForm()">
         <label for="first-name">First Name: </label>
         <input type="text" id="first-name" name="first-name" required>
         <label for="last-name">Last Name:</label>
@@ -28,9 +28,9 @@
             <option value="uscellular">US Cellular</option>
             <option value="metropcs">Metro PCS</option>
         </select>
-        <input type="submit" value = "Notify Me!">
+        <input type="submit" value = "Notify Me!" onclick="handleSubmit(event)">
     </form>
-    <div id ="success-message"></div>
+    <div id ="success-message" style="display: none;">Success. You are subscribed to Canvas Notify Me.</div>
     <script src="script.js"></script>
 </body>
 </html>

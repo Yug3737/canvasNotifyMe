@@ -7,7 +7,7 @@ const { assert } = require("console");
 const { lstatSync } = require("fs");
 
 //
-function isValidPhoneNumber(){
+function isValidForm(){
     let phoneNumber = document.getElementById("phone-no").value;
     if (!phoneNumber.match(/^\d{10}$/)){
         alert("Please enter a valid 10-digit US phone number.")
@@ -16,11 +16,7 @@ function isValidPhoneNumber(){
         alert("Phone number must be 10 digit length");
         return true
     }
-    return true
-}
-isValidPhoneNumber();
 
-function isValidName(){
     let firstName = document.getElementById("first-name").value();
     let lastName = document.getElementById("last-name").value();
     if(!firstName.match(/r'^[a-zA-Z0-9]+$'/)){
@@ -37,7 +33,6 @@ function isValidName(){
     }
     return true;
 }
-isValidName();
 
 function handleSubmit(event) {
     event.preventDefault(); // Prevents the default form submission
