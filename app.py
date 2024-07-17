@@ -12,6 +12,14 @@ SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_DB_PUBLIC_API_KEY")
 SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")
 
+if not SUPABASE_ANON_KEY:
+    raise ValueError("SUPABASE_ANON_KEY is not set")
+elif not SUPABASE_PROJECT_URL:
+    raise ValueError("SUPABASE_PROJECT_URL is not set`")
+elif not SUPABASE_SECRET_KEY:
+    raise ValueError("SUPABASE_SECRET_KEY is not set")
+
+
 supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_KEY)
 
 
