@@ -12,9 +12,13 @@ function isValidPhoneNumber(){
     if (!phoneNumber.match(/^\d{10}$/)){
         alert("Please enter a valid 10-digit US phone number.")
         return false;
+    } else if(phoneNumber.length !== 10){
+        alert("Phone number must be 10 digit length");
+        return true
     }
     return true
 }
+isValidPhoneNumber();
 
 function isValidName(){
     let firstName = document.getElementById("first-name").value();
@@ -33,7 +37,7 @@ function isValidName(){
     }
     return true;
 }
-
+isValidName();
 
 function handleSubmit(event) {
     event.preventDefault(); // Prevents the default form submission
