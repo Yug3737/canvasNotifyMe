@@ -19,7 +19,7 @@ function isValidForm(){
 
     let firstName = document.getElementById("first-name").value();
     let lastName = document.getElementById("last-name").value();
-    if(!firstName.match(/r'^[a-zA-Z0-9]+$'/)){
+    if(!firstName.match(/^[a-zA-Z0-9]+$/)){
         alert("Please enter valid first/last name only consisting of letters or numbers.");
         return false;
     }
