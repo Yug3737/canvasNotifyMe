@@ -3,9 +3,6 @@
 // author: Yug Patel
 // last modified: 17 July 2024
 
-const { assert } = require("console");
-const { lstatSync } = require("fs");
-
 function isValidForm() {
     let phoneNumber = document.getElementById("phone-no").value;
     if (!phoneNumber.match(/^\d{10}$/)) {
