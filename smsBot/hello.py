@@ -11,7 +11,7 @@ if len(sys.argv) != 2:
 
 load_dotenv()
 senderEmail = os.getenv('SENDER_EMAIL')
-appKey = os.getenv('YUGPATEL8767_APP_KEY')
+appKey = os.getenv('APP_KEY')
 
 if not senderEmail or not appKey:
     print("Error: SENDER_EMAIL or APP_KEY env variables are not set.")
