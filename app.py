@@ -9,15 +9,15 @@ from sqlalchemy.orm import DeclarativeBase
 from supabase import create_client, Client
 
 SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
-SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")
+SUPABASE_SECRET_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")
 
 if not SUPABASE_PROJECT_URL:
     raise ValueError("SUPABASE_PROJECT_URL is not set`")
-elif not SUPABASE_SECRET_KEY:
-    raise ValueError("SUPABASE_SECRET_KEY is not set")
+elif not SUPABASE_SECRET_SERVICE_ROLE_KEY:
+    raise ValueError("SUPABASE_SECRET_SERVICE_ROLE_KEY is not set")
 
 
-supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_KEY)
+supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 
 app = Flask(__name__)
 
@@ -26,8 +26,8 @@ print("data", data)
 
 
 # Ensure the environment variables are set
-if not os.getenv('SENDER_EMAIL') or not os.getenv('YUGPATEL8767_APP_KEY'):
-    raise EnvironmentError("SENDER_EMAIL or YUGPATEL8767_APP_KEY environment variables are not set.")
+if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
+    raise EnvironmentError("SENDER_EMAIL or APP_KEY environment variables are not set.")
 
 carriers = {
     'att': 'txt.att.net', # AT&T
