@@ -44,11 +44,9 @@ carriers = {
 def get_gateway_address(phone_number, carrier):
     return f"{phone_number}@{carriers[carrier]}"
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -57,21 +55,20 @@ def submit():
     env = os.environ.copy()
     env['PYTHONPATH'] = os.pathsep.join([env.get('PYTHONPATH', ''), os.path.abspath(os.path.dirname(__file__))])
 
-
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     cell_number = request.form['phone-no']
     cell_carrier = request.form['carriers']
-
+    notification_time = request.form['notification-time']
 
     try:
-
         print("Before adding Student")
         data = supabase.table("Student").insert({
             "first_name": first_name,
             "last_name": last_name, 
             "cell_number": cell_number,
-            "cell_carrier": cell_carrier}).execute()
+            "cell_carrier": cell_carrier,
+            "notification_time": notification_time, }).execute()
 
     except Exception as e:
         print(f"Error adding Student to database: {e}")
@@ -81,20 +78,18 @@ def submit():
     phoneNumber = cell_number 
     carrier = cell_carrier 
     gatewayAddress = get_gateway_address(phoneNumber,carrier)
-    
+    notificationTime = notification_time 
     print("before calling hello.py script")
 
     try:
-        result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress], capture_output=True, text=True, env=env)
+        result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress, notificationTime], capture_output=True, text=True, env=env)
         print(result.stdout)
-
         if result.returncode != 0:
             print("hello.py encountered an error")
             print(result.stderr)
     except Exception as e:
         print(f"Error running subprocess: {e}")
 
-    
     print("Redirecting to index.html") 
     return redirect(url_for('index'))
 

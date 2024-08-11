@@ -4,12 +4,12 @@ import os
 import sys
 import importlib.util
 from dotenv import load_dotenv
+load_dotenv()
 
 if len(sys.argv) != 2:
     print("usage: python hello.py <gatewayAddress>")
     sys.exit()
 
-load_dotenv()
 senderEmail = os.getenv('SENDER_EMAIL')
 appKey = os.getenv('APP_KEY')
 
@@ -18,6 +18,7 @@ if not senderEmail or not appKey:
     sys.exit(1)
 
 gatewayAddress = sys.argv[1]
+notificationtime = sys.argv[2]
 
 msg = EmailMessage()
 msg.set_content("\n Here would be your Canvas assignments that would be due within the next 14 days.")

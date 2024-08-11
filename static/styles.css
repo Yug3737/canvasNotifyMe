@@ -1,4 +1,3 @@
-
 /* Base styles */
 body {
     font-family: "Manrope", sans-serif;
@@ -45,7 +44,8 @@ label {
     color: #333;
 }
 
-input[type="text"], select {
+input[type="text"],
+select {
     font-family: "Manrope", sans-serif;
     width: calc(100% - 20px);
     padding: 10px;
@@ -81,13 +81,48 @@ input[type="submit"]:hover {
     margin-top: 20px;
 }
 
+input[type="time"] {
+    font-family: "Manrope", sans-serif;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    appearance: none;
+    /* Removes default styling in some browsers */
+}
+
+/* Styling for the time picker in browsers */
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background-color: #007BFF;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+input[type="time"]::-webkit-inner-spin-button {
+    display: none;
+    /* Removes the spin buttons in some browsers */
+}
+
+input[type="time"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
 /* Responsive design */
 @media (max-width: 600px) {
     form {
         padding: 10px 20px;
     }
 
-    label, input[type="text"], select, input[type="submit"] {
+    label,
+    input[type="text"],
+    select,
+    input[type="submit"] {
         font-size: 14px;
     }
 }
