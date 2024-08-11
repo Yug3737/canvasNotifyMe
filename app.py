@@ -9,13 +9,15 @@ from sqlalchemy.orm import DeclarativeBase
 from supabase import create_client, Client
 
 SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
-SUPABASE_SECRET_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")
+SUPABASE_SECRET_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_KEY")
 
+print("here")
 if not SUPABASE_PROJECT_URL:
-    raise ValueError("SUPABASE_PROJECT_URL is not set`")
+    raise ValueError("SUPABASE_PROJECT_URL is not set")
 elif not SUPABASE_SECRET_SERVICE_ROLE_KEY:
     raise ValueError("SUPABASE_SECRET_SERVICE_ROLE_KEY is not set")
 
+print("here2")
 
 supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 
