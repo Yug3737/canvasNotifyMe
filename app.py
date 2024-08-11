@@ -6,7 +6,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 from sqlalchemy.orm import DeclarativeBase
-from supabase import  create_client, Client
+from supabase import create_client, Client
 
 SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
 SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_API_KEY")

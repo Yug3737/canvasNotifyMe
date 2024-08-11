@@ -34,3 +34,6 @@ server.send_message(msg)
 server.quit()
 
 print("SMS sent successfully")
+
+if __name__ == "__main__":
+    main()
