@@ -1,26 +1,25 @@
-
+#
 # file: test.py
 # author: Yug Patel
-# last modified: 16 June 2024
+# last modified: 12 August 2024
 #
 
+import os
 import requests
 from datetime import datetime, timezone
 from dateutil import parser
+from dotenv import load_dotenv
+load_dotenv()
+
 
 CANVAS_BASE_URL = 'https://kent.instructure.com/api/v1'
 # Yug's access token
 
-def load_access_token(file_path="token.txt"):
-    with open(file_path, 'r') as file:
-        token = file.read().strip()
-    return token
-
-ACCESS_TOKEN = load_access_token() 
+YUG_CANVAS_ACCESS_TOKEN = os.getenv('YUG_CANVAS_ACCESS_TOKEN') 
 
 def get_headers():
     return{
-        "Authorization": f"Bearer {ACCESS_TOKEN}"
+        "Authorization": f"Bearer {YUG_CANVAS_ACCESS_TOKEN}"
     }
 
 def get_user_profile():
@@ -223,3 +222,4 @@ def get_hws_due(hw_dict: dict, current_time: str) -> dict:
 print("--------------------------------------------------------")
 print(rw_hw_dict)
 print(get_hws_due(rw_hw_dict,"2024-04-01T13:25:00z")) 
+
