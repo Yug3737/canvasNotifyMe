@@ -4,23 +4,21 @@
 # last modified: 16 June 2024
 #
 
+import os
 import requests
 from datetime import datetime, timezone
 from dateutil import parser
+from dotenv import load_dotenv
+load_dotenv()
 
 CANVAS_BASE_URL = 'https://kent.instructure.com/api/v1'
 # Yug's access token
 
-def load_access_token(file_path="token.txt"):
-    with open(file_path, 'r') as file:
-        token = file.read().strip()
-    return token
-
-ACCESS_TOKEN = load_access_token() 
+YUG_CANVAS_ACCESS_TOKEN = os.getenv('YUG_CANVAS_ACCESS_TOKEN')
 
 def get_headers():
     return{
-        "Authorization": f"Bearer {ACCESS_TOKEN}"
+        "Authorization": f"Bearer {YUG_CANVAS_ACCESS_TOKEN}"
     }
 
 def get_user_profile():
@@ -52,27 +50,19 @@ def compare_date_time_obj_iso(obj1:str, obj2:str) -> str:
     obj2_date = obj2.split('T')[0]
     obj1_time = obj1.split('T')[1]
     obj2_time = obj2.split('T')[1]
-    # print(obj2_time)
-    # print(obj1_time)
-    # print(obj2_date)
-    # print(obj1_date)
 
     result1 = f"{obj1} is before {obj2}"
     result2 = f"{obj1} is after {obj2}"
     result3 = f"{obj1} is same as {obj2}"
 
-    # print("obj2_date", obj2_date)
-    # print("obj1_date", obj1_date)
     obj2_year = int(obj2_date.split('-')[0])
     obj2_month = int(obj2_date.split('-')[1])
     obj2_day = int(obj2_date.split('-')[2])
-    # print(obj2_year) 
+
     obj1_year = int(obj1_date.split('-')[0])
     obj1_month = int(obj1_date.split('-')[1])
     obj1_day = int(obj1_date.split('-')[2])
 
-    # print(type(obj2_month))
-    # print(obj2_month, obj2_date)
     if obj1_year > obj2_year:
         return result2 
     elif obj1_year < obj2_year:
@@ -122,10 +112,10 @@ if __name__ == "__main__":
     test_time_zone = test_profile.get('time_zone')
 
     test_text_number_obj = get_text_number(test_id) 
-    print(test_id)
-    print(test_time_zone)
-    print(test_sortable_name)
-    print(test_lti_user_id)
+    print("test_id", test_id)
+    print("test_time_zone",test_time_zone)
+    print("test_sortable_name",test_sortable_name)
+    print("test_lti_user_id",test_lti_user_id)
 
     # test_email_id = None
 
@@ -133,7 +123,7 @@ if __name__ == "__main__":
         if item['type'] == 'email':
             test_email_id= item['address']
             break
-    print(test_email_id)
+    print("test_email_id",test_email_id)
     
     print("---------------------------------------------------------")
     test_courses = get_user_courses(test_id)
@@ -141,13 +131,13 @@ if __name__ == "__main__":
     test_course_ids = []
     test_course_names = []
     
-    print(test_course_ids)
+    print("test_course_ids", test_course_ids)
 
     problem_courses = []
     for test_course in test_courses:
         # print(test_course)
         if 'name' in test_course:
-            print(test_course['name'])
+            print("test_course['name']", test_course['name'])
             if "INTERMEDIATE MACROECONOMIC" in test_course['name']:
                 rw_course = test_course
         else:
@@ -166,8 +156,6 @@ def get_assignments_for_user(course_id):
 
 rw_course_id = rw_course['id']
 rw_assignments = get_assignments_for_user(rw_course_id)
-# print(rw_assignments)
-# print(len(rw_assignments))
 
 rw_hw_duedates = []
 rw_hw_dict = {} # dict with key as HW names and value as due datetime
@@ -214,12 +202,12 @@ def get_approximate_duedate_difference(duedate: str, today: str) -> int:
 def get_hws_due(hw_dict: dict, current_time: str) -> dict:
     result_dict = {}
     for hw, due_date in hw_dict.items():
-        print("before for loop---------------------------------")
+        # print("before for loop---------------------------------")
         if get_approximate_duedate_difference(due_date, current_time) < 14 and \
         get_approximate_duedate_difference(due_date, current_time) > 0:
             result_dict[hw] = due_date
             print(result_dict[hw])
     return result_dict
 print("--------------------------------------------------------")
-print(rw_hw_dict)
+print("rw_hw_dict",rw_hw_dict)
 print(get_hws_due(rw_hw_dict,"2024-04-01T13:25:00z")) 

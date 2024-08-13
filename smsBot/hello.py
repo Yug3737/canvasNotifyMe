@@ -1,8 +1,8 @@
 import smtplib
-from email.message import EmailMessage
 import os
 import sys
 import importlib.util
+from email.message import EmailMessage
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -37,4 +37,4 @@ server.quit()
 print("SMS sent successfully")
 
 if __name__ == "__main__":
-    main()
+    pass
