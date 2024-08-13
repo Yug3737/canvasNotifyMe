@@ -2,7 +2,7 @@
 # Script to trigger trigger_execute_daily_msg.py
 # file: trigger_execute_hello.py
 # author: Yug Patel
-# last modified: 12 August 2024
+# last modified: 13 August 2024
 # 
 import os
 import time
@@ -15,9 +15,10 @@ load_dotenv()
 """ This script is supposed to be running continouosly and triggering vercel function which is located in api/execute_hello.py
     """
 def trigger_execute_daily_msg():
-    url = "https://canvas-notify-me.vercel.app/api/execute_hello"
+    url = "https://canvas-notify-me.vercel.app/api/execute_daily_msg"
     response = requests.get(url)
     print(f"Triggered vercel function execute_hello.py. Status Code:  {response.status_code}")
+    print("Response received:", response)
 
 SUPABASE_PROJECT_URL = os.getenv('SUPABASE_PROJECT_URL')
 SUPABASE_SECRET_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SECRET_SERVICE_ROLE_KEY')
@@ -46,7 +47,7 @@ def get_notification_time(id: str) -> str:
 # Hardcoding id for myself right now
 id = 36
 notificationTime = get_notification_time(id)
-notificationTime = "09:21"
+notificationTime = "14:53"
 # Schedule acccording to time
 print("notificationTime is", notificationTime)
 schedule.every().day.at(notificationTime).do(trigger_execute_daily_msg)
