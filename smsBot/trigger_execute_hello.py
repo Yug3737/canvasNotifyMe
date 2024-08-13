@@ -47,7 +47,7 @@ def get_notification_time(id: str) -> str:
 # Hardcoding id for myself right now
 id = 36
 notificationTime = get_notification_time(id)
-notificationTime = "14:53"
+notificationTime = "14:56"
 # Schedule acccording to time
 print("notificationTime is", notificationTime)
 schedule.every().day.at(notificationTime).do(trigger_execute_daily_msg)

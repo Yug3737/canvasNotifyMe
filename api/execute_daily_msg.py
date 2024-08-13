@@ -2,7 +2,7 @@
 # Vercel function to be executed as an api endpoint 
 # file: execute_hello.py
 # author: Yug Patel
-# last modified: 12 August 2024
+# last modified: 13 August 2024
 # 
 import os
 import sys
@@ -14,6 +14,7 @@ load_dotenv()
 import datetime
 
 def handler(request):
+    print("Entered handler")
     senderEmail = os.getenv('SENDER_EMAIL')
     appKey = os.getenv('APP_KEY')
 
@@ -27,10 +28,26 @@ def handler(request):
     time_now = datetime.datetime.now()
     msg = EmailMessage()
     msg.set_content(f"The time is {time_now}. Which is adventure time.")
-    print(f"Script executed {time_now}")
+
+    gatewayAddress = "2166324947@vtext.com"
+    msg['From'] = senderEmail
+    msg['To'] = gatewayAddress
+    msg['Subject'] = 'Hello from Canvas Notify Me!'
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(senderEmail, appKey)
+
+    server.send_message(msg)
+    server.quit()
+    print(f"Script {__file__} executed at {time_now}")
+    print("Daily SMS sent successfully")
 
     # Perform scheduled task here
     return {
         "statusCode": 200,
         "body": "smsBot/hello.py executed successfully"
     }
+
+if __name__ == "__main__":
+    pass
