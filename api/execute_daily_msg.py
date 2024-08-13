@@ -46,7 +46,7 @@ def handler(request):
     # Perform scheduled task here
     return {
         "statusCode": 200,
-        "body": "smsBot/hello.py executed successfully"
+        "body": "smsBot/trigger_execute_hello.py executed successfully"
     }
 
 if __name__ == "__main__":

@@ -211,3 +211,6 @@ def get_hws_due(hw_dict: dict, current_time: str) -> dict:
 print("--------------------------------------------------------")
 print("rw_hw_dict",rw_hw_dict)
 print(get_hws_due(rw_hw_dict,"2024-04-01T13:25:00z")) 
+
+if __name__ == "__main__":
+    pass
