@@ -21,23 +21,27 @@ def trigger_execute_hello():
     print(f"Triggered vercel function execute_hello.py. Status Code:  {response.status_code}")
 
 SUPABASE_PROJECT_URL = os.getenv('SUPABASE_PROJECT_URL')
-SUPABASE_PUBLIC_ANON_KEY = os.getenv('SUPABASE_PUBLIC_ANON_KEY')
+SUPABASE_SECRET_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SECRET_SERVICE_ROLE_KEY')
 
-supabase_client = create_client(SUPABASE_PROJECT_URL, SUPABASE_PUBLIC_ANON_KEY)
+supabase_client = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 
 def get_notification_time(id: str) -> str:
     try:
         response = supabase_client\
-                .from_('Student')\
+                .table('Student')\
                 .select('notification_time')\
                 .eq('id', id)\
-                .single() 
+                .single()\
+                .execute()
 
-        data = response.execute()
+        data = response.data
         if data:
-            return data['notification_time']
+            if len(data) == 1:
+                return data['notification_time']
+            else:
+                return f"Multiple records found. Expexted only one."
         else:
-            return f"No record with id {id} found, hence notificationTime does not exist"
+            return "No record found."
     except Exception as err:
         return f"Error occured wile executing get_notification_time: {err}"
 # Hardcoding id for myself right now
