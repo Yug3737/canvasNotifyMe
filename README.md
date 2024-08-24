@@ -1,7 +1,7 @@
-# Canvas Notify Me
+# Canvas Notify Me (CNMe)
 - A daily SMS HW reminder app to provide convenient Canvas HW reminders
-- Inspiration behind the project: Missing homework deadlines during the past semesters due to not scheduling homeworks on time.
-- Purpose of creating Canvas Notify Me: So that students like me can shedule their upcoming homeworks easily using the Canvas API and can remain on top of their schoolwork.
+- Inspiration behind CNMe: Missing homework deadlines during the past semesters due to not scheduling homeworks on time.
+- Purpose of CNMe: So that students like me can shedule their upcoming homeworks easily using the Canvas API and can remain on top of their schoolwork.
 
 ## How to Use
 - Go to [the Vercel Website](https://canvas-notify-me.vercel.app/)
