@@ -7,9 +7,6 @@
         }
     ],
     "functions": {
-        "core/wsgi.py": {
-            "runtime": "@vercel/python@4.3.0"
-        },
         "api/*.py": {
             "runtime": "@vercel/python@4.3.0"
         }
