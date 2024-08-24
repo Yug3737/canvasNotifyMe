@@ -1,11 +1,5 @@
 {
     "version": 2,
-    "routes": [
-        {
-            "src": "/api/execute_daily_msg",
-            "dest": "/api/execute_daily_msg.py"
-        }
-    ],
     "functions": {
         "api/*.py": {
             "runtime": "@vercel/python@4.3.0"
