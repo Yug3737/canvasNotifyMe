@@ -25,12 +25,12 @@ SUPABASE_SECRET_SERVICE_ROLE_KEY = os.getenv('SUPABASE_SECRET_SERVICE_ROLE_KEY')
 
 supabase_client = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 
-def get_notification_time(id: str) -> str:
+def get_notification_time(student_id: str) -> str:
     try:
         response = supabase_client\
                 .table('Student')\
                 .select('notification_time')\
-                .eq('id', id)\
+                .eq('id', student_id)\
                 .single()\
                 .execute()
 

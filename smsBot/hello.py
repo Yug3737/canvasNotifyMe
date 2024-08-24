@@ -6,10 +6,6 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 load_dotenv()
 
-if len(sys.argv) != 2:
-    print("usage: python hello.py <gatewayAddress>")
-    sys.exit()
-
 senderEmail = os.getenv('SENDER_EMAIL')
 appKey = os.getenv('APP_KEY')
 

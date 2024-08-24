@@ -79,7 +79,10 @@ def submit():
     print("before calling hello.py script")
 
     try:
-        result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress, notificationTime], capture_output=True, text=True, env=env)
+        result = subprocess.run(['python', 'smsBot/hello.py', gatewayAddress, notificationTime],
+                                capture_output=True,
+                                text=True, 
+                                env=env)
         print(result.stdout)
         if result.returncode != 0:
             print("hello.py encountered an error")

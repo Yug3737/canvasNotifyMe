@@ -46,14 +46,14 @@ def get_text_number(given_id):
     return response.json()
 
 def compare_date_time_obj_iso(obj1:str, obj2:str) -> str:
+    result1 = f"{obj1} is before {obj2}"
+    result2 = f"{obj1} is after {obj2}"
+    result3 = f"{obj1} is same as {obj2}"
+
     obj1_date = obj1.split('T')[0]
     obj2_date = obj2.split('T')[0]
     obj1_time = obj1.split('T')[1]
     obj2_time = obj2.split('T')[1]
-
-    result1 = f"{obj1} is before {obj2}"
-    result2 = f"{obj1} is after {obj2}"
-    result3 = f"{obj1} is same as {obj2}"
 
     obj2_year = int(obj2_date.split('-')[0])
     obj2_month = int(obj2_date.split('-')[1])
@@ -164,7 +164,6 @@ for rw_assignment in rw_assignments:
         rw_hw_dict[rw_assignment['name']] = rw_assignment['due_at']
 
 print(rw_hw_dict)
-
 
 rw_hw_due_dates = list(rw_hw_dict.values())
 # print(rw_hw_due_dates)
