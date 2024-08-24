@@ -1,3 +1,9 @@
+#
+# file: hello.py
+# author: Yug Patel
+# last modified: 24 Aug 2024
+#
+
 import smtplib
 import os
 import sys
