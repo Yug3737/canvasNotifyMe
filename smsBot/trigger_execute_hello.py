@@ -39,7 +39,7 @@ def get_notification_time(student_id: str) -> str:
             if len(data) == 1:
                 return data['notification_time']
             else:
-                return f"Multiple records found. Expexted only one."
+                return f"Multiple records found. Expected only one."
         else:
             return "No record found."
     except Exception as err:
