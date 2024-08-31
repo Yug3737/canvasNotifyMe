@@ -23,7 +23,6 @@ app = Flask(__name__)
 # data = supabase.table("Student").select("*").execute()
 # print("data", data)
 
-
 # Ensure the environment variables are set
 if not os.getenv('SENDER_EMAIL') or not os.getenv('APP_KEY'):
     raise EnvironmentError("SENDER_EMAIL or APP_KEY environment variables are not set.")
@@ -35,7 +34,8 @@ carriers = {
     'sprint': 'messaging.sprintpcs.com', # Sprint
     'spectrum': 'vtext.com', #Spectrum
     'uscellular': 'uscc.textmsg.com', #US Cellular
-    'metropcs': 'metropcs.sms.us' # Metro PCS
+    'metropcs': 'metropcs.sms.us', # Metro PCS
+    'mintmobile': 'tmomail.net',
 }
 
 def get_gateway_address(phone_number, carrier):
