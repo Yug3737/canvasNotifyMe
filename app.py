@@ -20,8 +20,8 @@ supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 
 app = Flask(__name__)
 
-data = supabase.table("Student").select("*").execute()
-print("data", data)
+# data = supabase.table("Student").select("*").execute()
+# print("data", data)
 
 
 # Ensure the environment variables are set

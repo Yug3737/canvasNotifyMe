@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Notify Me</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src="../static/js/script.js"></script>
+</head>
+
+<body>
+    <h1>Canvas Notify Me</h1>
+    <p>A daily Homework reminder app to get conveneint upcoming Homework reminders.</p>
+    <p>Currently supporting College students in the US using Canvas LMS.</p>
+    <form id="notify-form" action="/submit" method="POST" onsubmit="return isValidForm()">
+        <label for="first-name">First Name: </label>
+        <input type="text" id="first-name" name="first-name" required maxlength="30">
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last-name" maxlength="30">
+        <br>
+        <label for="phone-no">Phone Number(10 digits, US only)</label>
+        <input type="text" id="phone-no" name="phone-no" required pattern="[0-9]{10}" maxlength="10">
+        <br>
+        <label for="carriers"> Choose your Cell Phone Carrier:</label>
+        <select name="carriers" id="carriers">
+            <option value="att">AT&T</option>
+            <option value="verizon">Verizon</option>
+            <option value="tmobile">T-Mobile</option>
+            <option value="sprint">Sprint</option>
+            <option value="spectrum">Spectrum</option>
+            <option value="uscellular">US Cellular</option>
+            <option value="metropcs">Metro PCS</option>
+        </select>
+        <br>
+        <label for="notification-time">Preferred Daily Notification Time(Optional, EST):</label>
+        <input type="time" id="notification-time" name="notification-time">
+        <br>
+        <button type="submit" value="Notify Me!">
+    </form>
+    <div id="success-message" style="display: none;">Success. You are subscribed to Canvas Notify Me.</div>
+</body>
+
+</html>

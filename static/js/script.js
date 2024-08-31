@@ -12,9 +12,10 @@ function isValidForm() {
         alert("Phone number must be 10 digit length");
         return false;
     }
+    console.log("phone number is valid")
 
-    let firstName = document.getElementById("first-name").value();
-    let lastName = document.getElementById("last-name").value();
+    let firstName = document.getElementById("first-name").value;
+    let lastName = document.getElementById("last-name").value;
     if (!firstName.match(/^[a-zA-Z0-9]+$/)) {
         alert("Please enter valid first/last name only consisting of letters or numbers.");
         return false;
@@ -27,6 +28,7 @@ function isValidForm() {
         alert("Last Name cannot be longer than 30 characters.");
         return false;
     }
+    console.log("name is valid")
     return true;
 }
 
@@ -48,3 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Chose notification Time: ', inputTime.value);
     })
 })
+
+document.getElementById("notify-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Custom logic for handling the POST request
+    const formData = new FormData(this);
+
+    fetch("/submit", {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                document.getElementById("success-message").style.display = "block";
+            } else {
+                alert("Failed!");
+            }
+        })
+        .catch((error) => console.error("Error:", error));
+});
