@@ -49,19 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Type of time', typeof (inputTime));
         console.log('Chose notification Time: ', inputTime.value);
     })
-})
+});
 
 document.getElementById("notify-form").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent the default form submission
 
     // Custom logic for handling the POST request
     const formData = new FormData(this);
-
     fetch("/submit", {
         method: "POST",
         body: formData,
     })
-        .then((response) => response.json())
+        .then((response) => {
+            response.json()
+            console.log(response)
+        })
         .then((data) => {
             if (data.success) {
                 document.getElementById("success-message").style.display = "block";
