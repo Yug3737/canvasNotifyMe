@@ -12,13 +12,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CANVAS_BASE_URL = 'https://kent.instructure.com/api/v1'
-# Yug's access token
 
-YUG_CANVAS_ACCESS_TOKEN = os.getenv('YUG_CANVAS_ACCESS_TOKEN')
+CANVAS_ACCESS_TOKEN = os.getenv('CANVAS_ACCESS_TOKEN')
 
 def get_headers():
     return{
-        "Authorization": f"Bearer {YUG_CANVAS_ACCESS_TOKEN}"
+        "Authorization": f"Bearer {CANVAS_ACCESS_TOKEN}"
     }
 
 def get_user_profile():
@@ -104,97 +103,6 @@ def compare_date_time_obj_iso(obj1:str, obj2:str) -> str:
                             return result1
                         return result3
  
-if __name__ == "__main__":
-    test_profile = get_user_profile()
-    test_id = test_profile.get('id')
-    test_lti_user_id = test_profile.get('lti_user_id')
-    test_sortable_name = test_profile.get('sortable_name')
-    test_time_zone = test_profile.get('time_zone')
-
-    test_text_number_obj = get_text_number(test_id) 
-    print("test_id", test_id)
-    print("test_time_zone",test_time_zone)
-    print("test_sortable_name",test_sortable_name)
-    print("test_lti_user_id",test_lti_user_id)
-
-    # test_email_id = None
-
-    for item in test_text_number_obj:
-        if item['type'] == 'email':
-            test_email_id= item['address']
-            break
-    print("test_email_id",test_email_id)
-    
-    print("---------------------------------------------------------")
-    test_courses = get_user_courses(test_id)
-
-    test_course_ids = []
-    test_course_names = []
-    
-    print("test_course_ids", test_course_ids)
-
-    problem_courses = []
-    for test_course in test_courses:
-        # print(test_course)
-        if 'name' in test_course:
-            print("test_course['name']", test_course['name'])
-            if "INTERMEDIATE MACROECONOMIC" in test_course['name']:
-                rw_course = test_course
-        else:
-            print("Key 'name' not found in test_course")
-            problem_courses.append(test_course)
-
-# print(problem_courses)
-# print(rw_course)
-
-# Now have all the detials for research writing course
-def get_assignments_for_user(course_id):
-    url = f"{CANVAS_BASE_URL}/courses/{course_id}/assignments/"
-    response = requests.get(url, headers=get_headers())
-    response.raise_for_status()
-    return response.json()
-
-rw_course_id = rw_course['id']
-rw_assignments = get_assignments_for_user(rw_course_id)
-
-rw_hw_duedates = []
-rw_hw_dict = {} # dict with key as HW names and value as due datetime
-for rw_assignment in rw_assignments:
-    if rw_assignment['due_at'] != None:
-        rw_hw_dict[rw_assignment['name']] = rw_assignment['due_at']
-
-print(rw_hw_dict)
-
-rw_hw_due_dates = list(rw_hw_dict.values())
-# print(rw_hw_due_dates)
-# print("result of comparing 2 datetime strings ->")
-# print(rw_hw_due_dates[0])
-# print(rw_hw_due_dates[1])
-# print(compare_date_time_obj_iso(rw_hw_due_dates[0], rw_hw_due_dates[1]))
-
-# Finding latest current time object
-# precondition: given the OS is working
-# postcondition: returns a string represented in the format "YYYY-MM-DDTDD-MM-SSz"
-def get_current_time_string()-> str:
-    curr_time_obj = datetime.now()
-    time_string = curr_time_obj.strftime('%Y-%m-%dT%H:%M:%S')
-    return time_string
-
-# precondition: given 2 strings first is due date of a HW and second is current time,
-#               both in the formats of "YYYY-MM-DDTDD-MM-SSz"
-# postcondition: returns the approximate difference between the date and hours of the two dates 
-#                as an int
-def get_approximate_duedate_difference(duedate: str, today: str) -> int:
-    # Parse the date strings into datetime objects
-    duedate_dt = datetime.strptime(duedate, '%Y-%m-%dT%H:%M:%Sz')
-    today_dt = datetime.strptime(today, '%Y-%m-%dT%H:%M:%Sz')
-    
-    # Calculate the difference in days
-    difference = (duedate_dt - today_dt).days
-    return difference
-        
-# print(get_approximate_duedate_difference('2024-02-08T14:25:00z','2024-01-30T14:25:00z'))
-
 # precondition: parameters are current time string and homeworks dictionary with keys are homework names and 
 #               values are corresponding hw names
 # postcondition: returns a filtered dictionary whose homework due dates are within 14 days of current date 
@@ -207,9 +115,84 @@ def get_hws_due(hw_dict: dict, current_time: str) -> dict:
             result_dict[hw] = due_date
             print(result_dict[hw])
     return result_dict
-print("--------------------------------------------------------")
-print("rw_hw_dict",rw_hw_dict)
-print(get_hws_due(rw_hw_dict,"2024-04-01T13:25:00z")) 
+
+def get_assignments_by_course_id(course_id):
+    url = f"{CANVAS_BASE_URL}/courses/{course_id}/assignments/"
+    response = requests.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()
+
+# Finding latest current time object
+# precondition: given the OS is working
+# postcondition: returns a string represented in the format "YYYY-MM-DDTDD-MM-SSz"
+def get_current_time_string_iso()-> str:
+    curr_time_obj = datetime.now()
+    time_string = curr_time_obj.strftime('%Y-%m-%dT%H:%M:%S')
+    time_string += "z"
+    return time_string
+
+# precondition: given 2 strings first is due date of a HW and second is current time,
+#               both in the formats of "YYYY-MM-DDTDD-MM-SSz"
+# postcondition: returns the approximate difference between the date and hours of the two dates as an int
+def get_approximate_duedate_difference(duedate: str, today: str) -> int:
+    duedate_dt = datetime.strptime(duedate, '%Y-%m-%dT%H:%M:%Sz')
+    today_dt = datetime.strptime(today, '%Y-%m-%dT%H:%M:%Sz')
+    difference = (duedate_dt - today_dt).days
+    return difference
+
+def get_curr_month(date_string):
+    date = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
+    return date.month
+
+def get_curr_year(date_string):
+    date = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%SZ")
+    return date.year
+
+def get_curr_semester_course_name_id_dict(user_id):
+    curr_month = get_curr_month(get_current_time_string_iso())
+    curr_season, curr_year = "", str(get_curr_year(get_current_time_string_iso()))
+    if 8 <= curr_month <= 12:
+        curr_season = "Fall "
+    elif 1 <= curr_month <= 5:
+        curr_season = "Spring "
+    else:
+        curr_season = "Summer "
+    
+    curr_semester = curr_season + curr_year
+
+    courses = get_user_courses(user_id)
+    curr_semester_course_id_name_dict = {}
+    for course in courses:
+        if 'name' in course:
+            course_name = course['name']
+            if curr_semester in course_name:
+                curr_semester_course_id_name_dict[course['id']] = course_name
+    return curr_semester_course_id_name_dict
+
+def get_hw_dict_from_course_ids(user_id):
+    course_name_id_dict = get_curr_semester_course_name_id_dict(user_id)
+    hw_dict = {}
+    for course_id in course_name_id_dict.keys():
+        hws = get_assignments_by_course_id(course_id)
+        try:
+            course_name = course_name_id_dict[course_id]
+            course_name = course_name.split("(")[0]
+            course_name = course_name.split(" ")[2:]
+            course_name = " ".join(course_name)
+            hw_name = course_name + hws[0]['name']
+            hw_due_at =hws[0]['due_at']
+            hw_dict[hw_name] = hw_due_at
+        except Exception:
+            pass
+    return hw_dict
 
 if __name__ == "__main__":
-    pass
+    user_profile = get_user_profile()
+    user_id = user_profile.get('id')
+    lti_user_id = user_profile.get('lti_user_id')
+    sortable_name = user_profile.get('sortable_name')
+    time_zone = user_profile.get('time_zone')
+
+    hw_dict = get_hw_dict_from_course_ids(user_id)
+    print(get_hws_due(hw_dict, get_current_time_string_iso()))
+    print("---------------------------------------------------------")
