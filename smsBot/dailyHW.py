@@ -21,10 +21,10 @@ if not senderEmail or not appKey:
 
 gatewayAddress = sys.argv[1]
 notificationtime = sys.argv[2]
-hw_dict = sys.argv[3]
+hw_str = sys.argv[3]
 
 msg = EmailMessage()
-msg.set_content("hw_dict", hw_dict)
+msg.set_content(hw_str)
 
 msg['From'] = senderEmail # 'email@address.com'
 msg['To'] = gatewayAddress #

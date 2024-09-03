@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from supabase import create_client, Client
 from functions import get_gateway_address
+from canvas_api import get_hws_due, get_hw_dict_from_course_ids, get_current_time_string_iso, get_user_profile
 
 SUPABASE_PROJECT_URL = os.environ.get("SUPABASE_PROJECT_URL")
 SUPABASE_SECRET_SERVICE_ROLE_KEY = os.environ.get("SUPABASE_SECRET_SERVICE_ROLE_KEY")
@@ -27,14 +28,16 @@ supabase = create_client(SUPABASE_PROJECT_URL, SUPABASE_SECRET_SERVICE_ROLE_KEY)
 # Dictionary {"HH:MM":count}, count is the number of people in the database who chose "HH:MM" as their daily notification time
 
 notification_times = {
-    "17:24": 2,
-    "17:25": 2,
-    "17:34": 2,
-    "17:37": 2,
-    "17:30": 2,
-    "17:31": 2,
-    "17:32": 2,
-    "17:33": 2,
+    "20:11": 2,
+    "20:12": 2,
+    "20:13": 2,
+    "20:14": 2,
+    "20:15": 2,
+    "20:16": 2,
+    "20:17": 2,
+    "20:18": 2,
+    "20:09": 2,
+    "20:10": 2,
 }
 
 def check_notification_times():
@@ -53,13 +56,20 @@ def check_notification_times():
                 notification_time = student["notification_time"]
                 gatewayAddress = get_gateway_address(student["cell_number"], student["cell_carrier"])
                 try:
-                    result = subprocess.run(['python', 'hello.py', gatewayAddress, notification_time],
+                    user_profile = get_user_profile()
+                    user_id = user_profile.get('id')
+                    hw_dict = get_hws_due(get_hw_dict_from_course_ids(
+                        user_id), get_current_time_string_iso())
+                    hw_str = str()
+                    for key,value in hw_dict.items():
+                        hw_str += key + ": " + value + "\n"
+                    result = subprocess.run(['python', 'smsBot/dailyHW.py', gatewayAddress, notification_time, hw_str],
                                             capture_output=True,
                                             text=True, 
                                             env=env)
                     print(result.stdout)
                     if result.returncode != 0:
-                        print("hello.py encountered an error")
+                        print("schedule.py encountered an error")
                         print(result.stderr)
                 except Exception as e:
                     print(f"Error running subprocess: {e}")
